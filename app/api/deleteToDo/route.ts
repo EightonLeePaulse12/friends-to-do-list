@@ -3,21 +3,23 @@ import { NextResponse } from "next/server";
 
 export const DELETE = async (req: Request) => {
   const body = await req.json();
+  console.log(body)
   const { id } = body;
 
   try {
-    if (!id) {
-      return NextResponse.json({
-        message: "Record could not be deleted because it does not exist",
-        status: 404,
-      });
-    }
 
     const res = await prisma.todo.delete({
       where: {
         id: id,
       },
     });
+
+    if (!id) {
+        return NextResponse.json({
+          message: "Record could not be deleted because it does not exist",
+          status: 404,
+        });
+      }
 
     if (!res) {
       return NextResponse.json({
