@@ -49,8 +49,8 @@ const page: React.FC = () => {
             <tr>
               <th className="p-3">Name</th>
               <th className="p-3">Due Date</th>
-              <th className="p-3">Completed</th>
               <th className="p-3">Priority</th>
+              <th className="p-3">Completed</th>
               <th className="p-3">Edit</th>
               <th className="p-3">Delete</th>
             </tr>
@@ -60,8 +60,8 @@ const page: React.FC = () => {
               <tr key={todo.id}>
                 <td className="p-3">{todo.name}</td>
                 <td className="p-3">{todo.dueDate.substring(0, 10)}</td>
-                <td className="p-3">{todo.isCompleted ? (<p>Yes</p>) : (<p>No</p>)}</td>
                 <td className="p-3">{todo.priority === "One" ? (<p>1</p>) : todo.priority === "Two" ? (<p>2</p>) : todo.priority === "Three" ? (<p>3</p>) : todo.priority === "Four" ? (<p>4</p>) : todo.priority === "Five" ? (<p>5</p>) : null}</td>
+                <td className="p-3">{todo.isCompleted ? (<p>Yes</p>) : (<p>No</p>)}</td>
                 <td className="p-3">
                   <button type="button" className="">
                     <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
