@@ -3,7 +3,7 @@ import './globals.css'
 
 
 export const metadata: Metadata = {
-  title: 'Nishaan\'s To-do List',
+  title: 'To-Do List',
   description: 'App for girl to make stuff for her day',
 }
 
