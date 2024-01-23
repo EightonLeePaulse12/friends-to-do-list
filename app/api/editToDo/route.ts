@@ -4,19 +4,21 @@ import { NextResponse } from "next/server";
 export const PATCH = async (req: Request) => {
   const body = await req.json();
   const { id, name, dueDate, priority, isCompleted } = body;
-//   const newDate = new Date(dueDate).toISOString();
+  const newDate = new Date(dueDate).toISOString();
+  const newId = parseInt(id, 10)
   try {
     const res = await prisma.todo.update({
       where: {
-        id: id,
+        id: newId,
       },
       data: {
         name,
-        dueDate,
+        dueDate: newDate,
         priority,
         isCompleted,
       },
     });
+    console.log(res)
 
     if (!id) {
       return NextResponse.json({
