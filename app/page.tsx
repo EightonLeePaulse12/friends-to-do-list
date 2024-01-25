@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import Link from 'next/link';
-// import '@/public/table.css'
+
 
 interface Todo {
   id: number;
@@ -85,7 +85,7 @@ const page: React.FC = () => {
           </Link>
         </div>
         <div className="w-full flex justify-center items-center">
-          <table className="text-left">
+          <table className="text-left w-full mx-auto mt-8">
             <thead>
               <tr>
                 <th className="p-3">Name</th>
@@ -101,7 +101,7 @@ const page: React.FC = () => {
                 <tr key={todo.id}>
                   <td className="p-3">{todo.name}</td>
                   <td className="p-3">{todo.dueDate.substring(0, 10)}</td>
-                  <td className="p-3 flex justify-center">{todo.priority === "One" ? (<svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <td className="p-3">{todo.priority === "One" ? (<svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M6.25 12.5C5.38542 12.5 4.57292 12.3358 3.8125 12.0075C3.05208 11.6792 2.39062 11.234 1.82812 10.6719C1.26563 10.1094 0.820417 9.44792 0.4925 8.6875C0.164583 7.92708 0.000416667 7.11458 0 6.25C0 5.38542 0.164167 4.57292 0.4925 3.8125C0.820833 3.05208 1.26604 2.39062 1.82812 1.82812C2.39062 1.26563 3.05208 0.820417 3.8125 0.4925C4.57292 0.164583 5.38542 0.000416667 6.25 0C7.11458 0 7.92708 0.164167 8.6875 0.4925C9.44792 0.820833 10.1094 1.26604 10.6719 1.82812C11.2344 2.39062 11.6798 3.05208 12.0081 3.8125C12.3365 4.57292 12.5004 5.38542 12.5 6.25C12.5 7.11458 12.3358 7.92708 12.0075 8.6875C11.6792 9.44792 11.234 10.1094 10.6719 10.6719C10.1094 11.2344 9.44792 11.6798 8.6875 12.0081C7.92708 12.3365 7.11458 12.5004 6.25 12.5Z" fill="#006B4E" />
                   </svg>
                   ) : todo.priority === "Two" ? (<svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -131,8 +131,8 @@ const page: React.FC = () => {
                   )}</td>
                   <td className="p-3">
                     <Link href={`/edit/${todo.id}`} passHref>
-                      <button type="button" className="">
-                        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <button type="button" className="text-blue-500 hover:underline">
+                        <svg width="20" height="20" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M9.30372 1.72004L8.72437 2.2994L3.39893 7.62421C3.03832 7.98544 2.8577 8.16606 2.70271 8.36481C2.51966 8.59934 2.3627 8.85312 2.2346 9.12165C2.12648 9.34915 2.04586 9.59164 1.88461 10.0754L1.20089 12.1259L1.03339 12.6272C0.994217 12.744 0.988404 12.8694 1.01661 12.9894C1.04482 13.1094 1.10592 13.2191 1.19306 13.3062C1.2802 13.3933 1.38991 13.4545 1.50987 13.4827C1.62983 13.5109 1.75528 13.5051 1.87211 13.4659L2.37335 13.2984L4.4239 12.6147C4.90826 12.4534 5.15012 12.3728 5.37761 12.2647C5.64635 12.1365 5.90009 11.9797 6.13446 11.7966C6.3332 11.6416 6.51382 11.4609 6.87443 11.1003L12.1999 5.7749L12.7792 5.19554C13.2401 4.73466 13.499 4.10958 13.499 3.45779C13.499 2.80601 13.2401 2.18092 12.7792 1.72004C12.3183 1.25916 11.6933 1.00024 11.0415 1.00024C10.3897 1.00024 9.7646 1.25916 9.30372 1.72004Z" stroke="#699BF7" stroke-width="1.5" />
                           <path opacity="0.5" d="M8.72441 2.29883C8.72441 2.29883 8.79691 3.53003 9.88312 4.61624C10.9693 5.70246 12.1999 5.77433 12.1999 5.77433M2.37339 13.2984L1.20093 12.126" stroke="#699BF7" stroke-width="1.5" />
                         </svg>
