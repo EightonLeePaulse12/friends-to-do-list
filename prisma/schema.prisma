@@ -58,3 +58,28 @@ model VerificationToken {
 
     @@unique([identifier, token])
 }
+
+model Todos {
+    id       Int        @id @default(autoincrement())
+    name     String
+    priority Priority
+    subnotes Subnotes[]
+    dueDate  DateTime?
+}
+
+model Subnotes {
+    id     Int    @id @default(autoincrement())
+    name   String
+    todoId Int
+    todos  Todos  @relation(fields: [todoId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+    @@index([todoId])
+}
+
+enum Priority {
+    Null
+    Low
+    Neutral
+    High
+    Critical
+}
