@@ -49,6 +49,7 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+    todos         Todos[]
 }
 
 model VerificationToken {
@@ -61,10 +62,14 @@ model VerificationToken {
 
 model Todos {
     id       Int        @id @default(autoincrement())
+    userId   String
+    user     User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
     name     String
     priority Priority
     subnotes Subnotes[]
     dueDate  DateTime?
+
+    @@index([userId])
 }
 
 model Subnotes {
