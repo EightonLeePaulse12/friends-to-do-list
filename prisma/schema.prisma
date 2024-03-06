@@ -68,6 +68,7 @@ model Todos {
     priority Priority
     subnotes Subnotes[]
     dueDate  DateTime?
+    createdAt DateTime @default(now())
 
     @@index([userId])
 }

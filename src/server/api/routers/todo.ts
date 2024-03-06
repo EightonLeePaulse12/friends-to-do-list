@@ -22,6 +22,23 @@ export const todoRouter = createTRPCRouter({
       id: z.number()
     })
   ).query(async ({ ctx, input }) => {
+    const todo = await ctx.db.todos.findUnique({
+      where: {
+        id: input.id
+      },
+      include: {
+        subnotes: {
+          where: {
+            todoId: input.id
+          }
+        }
+      }
+    })
+  }),
+  makeToDo: protectedProcedure.input(
+    z.object({
+      id: z.number(),
 
-  })
+    })
+  )
 });
