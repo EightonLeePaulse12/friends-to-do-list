@@ -64,7 +64,7 @@ export const todoRouter = createTRPCRouter({
   createSubNotes: protectedProcedure
     .input(
       z.object({
-        subnotes: z.array(z.object({ name: z.string() })),
+        subnotes: z.array(z.object({ name: z.string() })), 
         todoId: z.number(),
       }),
     )
