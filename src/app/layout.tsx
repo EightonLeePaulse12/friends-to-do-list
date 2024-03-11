@@ -1,7 +1,9 @@
-import "~/styles/globals.css";
 
+
+import "~/styles/globals.css";
+import ClientProvider from "~/components/ClientProvider";
 import { TRPCReactProvider } from "~/trpc/react";
-import { SessionProvider } from "next-auth/react";
+// import { SessionProvider } from "next-auth/react";
 
 export const metadata = {
   title: "To-Do List",
@@ -16,11 +18,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <SessionProvider>
+      <ClientProvider>
       <body className={`font-sans`}>
         <TRPCReactProvider>{children}</TRPCReactProvider>
       </body>
-      </SessionProvider>
+      </ClientProvider>
     </html>
   );
 }

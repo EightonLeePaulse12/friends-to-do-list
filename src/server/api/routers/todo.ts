@@ -1,3 +1,5 @@
+"use server";
+
 import { z } from "zod";
 
 import {
@@ -7,6 +9,7 @@ import {
 } from "~/server/api/trpc";
 
 export const todoRouter = createTRPCRouter({
+  
   fetchToDos: protectedProcedure.query(async ({ ctx }) => {
     const userID = ctx.session.user.id;
     if (!userID) return;
@@ -20,6 +23,7 @@ export const todoRouter = createTRPCRouter({
     });
     return todos;
   }),
+
   fetchSingleToDo: protectedProcedure
     .input(
       z.object({
@@ -40,6 +44,7 @@ export const todoRouter = createTRPCRouter({
         },
       });
     }),
+
   makeToDo: protectedProcedure
     .input(
       z.object({
@@ -61,10 +66,11 @@ export const todoRouter = createTRPCRouter({
       });
       return createToDo;
     }),
+
   createSubNotes: protectedProcedure
     .input(
       z.object({
-        subnotes: z.array(z.object({ name: z.string() })), 
+        subnotes: z.array(z.object({ name: z.string() })),
         todoId: z.number(),
       }),
     )
@@ -86,6 +92,7 @@ export const todoRouter = createTRPCRouter({
 
       return createSubNote;
     }),
+
   editToDo: protectedProcedure
     .input(
       z.object({
@@ -109,6 +116,7 @@ export const todoRouter = createTRPCRouter({
 
       return edit;
     }),
+
   editSubnotes: protectedProcedure
     .input(
       z.object({
@@ -134,6 +142,7 @@ export const todoRouter = createTRPCRouter({
 
       return edit;
     }),
+
   deleteToDo: protectedProcedure
     .input(
       z.object({
@@ -151,6 +160,7 @@ export const todoRouter = createTRPCRouter({
       });
       return deletion;
     }),
+
   deleteSubNote: protectedProcedure
     .input(
       z.object({
