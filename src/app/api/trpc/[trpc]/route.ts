@@ -4,6 +4,7 @@ import { type NextRequest } from "next/server";
 import { env } from "~/env";
 import { appRouter } from "~/server/api/root";
 import { createTRPCContext } from "~/server/api/trpc";
+import middleware from "../../middleware";
 
 /**
  * This wraps the `createTRPCContext` helper and provides the required context for the tRPC API when
@@ -29,6 +30,6 @@ const handler = (req: NextRequest) =>
             );
           }
         : undefined,
-  });
+  })
 
 export { handler as GET, handler as POST };

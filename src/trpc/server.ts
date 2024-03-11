@@ -22,6 +22,7 @@ import { transformer } from "./shared";
 const createContext = cache(() => {
   const heads = new Headers(headers());
   heads.set("x-trpc-source", "rsc");
+  heads.set("Content-type", "application/json")
 
   return createTRPCContext({
     headers: heads,
