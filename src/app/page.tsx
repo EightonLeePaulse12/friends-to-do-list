@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 // import { Progress } from '~/components/ui/progress';
 import {
   Table,
@@ -11,14 +11,15 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table"
-import { useSession } from 'next-auth/react'
-import { todoRouter } from '~/server/api/routers/todo'
+// import { useSession } from 'next-auth/react'
+import { getServerSession } from 'next-auth/next';
+// import { todoRouter } from '~/server/api/routers/todo'
 
 
 const page = () => {
-  useSession({ required: true })
+  // useSession({ required: true })
   // const session = useSession();
-  console.log()
+  // console.log()
   const [todos, setToDos] = useState<string[]>([])
 
   useEffect(() => {
