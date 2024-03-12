@@ -1,9 +1,11 @@
-"use client";
+import LoginForm from "~/components/LoginForm";
 
-const page = () => {
+function LoginPage() {
   return (
-    <div>page</div>
-  )
+    <div>
+      <LoginForm />
+    </div>
+  );
 }
 
-export default page
+export default LoginPage;

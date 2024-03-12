@@ -10,7 +10,7 @@ import { observable } from "@trpc/server/observable";
 import { type TRPCErrorResponse } from "@trpc/server/rpc";
 import { headers } from "next/headers";
 import { cache } from "react";
-
+import SuperJSON from "superjson";
 import { appRouter, type AppRouter } from "~/server/api/root";
 import { createTRPCContext } from "~/server/api/trpc";
 import { transformer } from "./shared";
@@ -23,6 +23,7 @@ const createContext = cache(() => {
   const heads = new Headers(headers());
   heads.set("x-trpc-source", "rsc");
   heads.set("Content-type", "application/json")
+  console.log("Headers: ", heads)
 
   return createTRPCContext({
     headers: heads,
@@ -44,8 +45,10 @@ export const api = createTRPCProxyClient<AppRouter>({
     () =>
       ({ op }) =>
         observable((observer) => {
+          console.log("Operation: ", op)
           createContext()
             .then((ctx) => {
+              console.log("Context: ", ctx)
               return callProcedure({
                 procedures: appRouter._def.procedures,
                 path: op.path,
@@ -55,11 +58,13 @@ export const api = createTRPCProxyClient<AppRouter>({
               });
             })
             .then((data) => {
+              console.log("Data: ", data)
               observer.next({ result: { data } });
               observer.complete();
             })
             .catch((cause: TRPCErrorResponse) => {
               observer.error(TRPCClientError.from(cause));
+              console.error("Hello: ", TRPCClientError)
             });
         }),
   ],

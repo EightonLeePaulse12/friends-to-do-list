@@ -1,5 +1,3 @@
-"use server";
-
 import { z } from "zod";
 
 import {
@@ -9,7 +7,6 @@ import {
 } from "~/server/api/trpc";
 
 export const todoRouter = createTRPCRouter({
-  
   fetchToDos: protectedProcedure.query(async ({ ctx }) => {
     const userID = ctx.session.user.id;
     if (!userID) return;
@@ -43,6 +40,8 @@ export const todoRouter = createTRPCRouter({
           },
         },
       });
+      console.log("Todo: ", todo)
+      return todo
     }),
 
   makeToDo: protectedProcedure
