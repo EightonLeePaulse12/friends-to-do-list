@@ -16,6 +16,7 @@ import { api } from 'utils/api';
 import { useRouter } from 'next/navigation';
 import { Todo } from 'types/todo';
 import { Button } from './ui/button';
+import { Pencil, Trash2 } from 'lucide-react'
 
 
 const page = () => {
@@ -32,7 +33,7 @@ const page = () => {
                 });
 
                 console.log(todos)
-                // setTodos(todos as Todo[])
+                setTodos([todos] as Todo[])
             } catch (error) {
                 console.error("Error fetching todos:", { error: error });
                 setError("An error occured")
@@ -50,9 +51,15 @@ const page = () => {
                 <div className="header">
                     <h1 className='text-center p-8 font-bold text-[48px]'>To-do List</h1>
                 </div>
-                <Button onClick={async () => await signOut({ redirect: true, callbackUrl: "/api/auth/signIn" })}>
-                    Log out
-                </Button>
+                <div className="w-[100%] flex justify-between">
+                    <Button onClick={async () => await signOut({ redirect: true, callbackUrl: "/api/auth/signin" })}>
+                        Log out
+                    </Button>
+                    <Button variant={"outline"}>
+                        Create
+                    </Button>
+                </div>
+
                 <div className="">
                     <Table>
                         <TableCaption>Manage Your Day!</TableCaption>
@@ -60,9 +67,9 @@ const page = () => {
                             <TableRow>
                                 <TableHead>ID</TableHead>
                                 <TableHead>Name</TableHead>
-                                <TableHead>Due Date</TableHead>
                                 <TableHead>Created At</TableHead>
                                 <TableHead>Due Date</TableHead>
+                                {/* <TableHead>Due Date</TableHead> */}
                                 <TableHead>Priority</TableHead>
                                 <TableHead>Sub Notes</TableHead>
                                 <TableHead>Actions</TableHead>
@@ -70,26 +77,33 @@ const page = () => {
                         </TableHeader>
                         <TableBody>
                             <TableRow>
-                                {todos ? todos.map((e) => (
+                                {todos ? (todos.map((e) => (
                                     <>
                                         <TableCell>
-                                        {e.id}
-                                    </TableCell>
-                                    <TableCell>
-                                        {e.name}
-                                    </TableCell>
-                                    <TableCell>
-                                        {e.dueDate?.toISOString().substring(10, 0)}
-                                    </TableCell>
-                                    <TableCell>
-                                        {e.priority}
-                                    </TableCell>
-                                    <TableCell>
-                                        {e.subnotes[0]?.name}
-                                    </TableCell>
-                                    <TableCell>
-                                        {e.userId}
-                                    </TableCell>
+                                            {e.id}
+                                        </TableCell>
+                                        <TableCell>
+                                            {e.name}
+                                        </TableCell>
+                                        <TableCell>
+                                            {e.createdAt?.toISOString().substring(10, 0)}
+
+                                        </TableCell>
+                                        <TableCell>
+                                            {e.dueDate?.toISOString().substring(10, 0)}
+                                        </TableCell>
+                                        <TableCell>
+                                            {e.priority}
+                                        </TableCell>
+                                        <TableCell>
+                                            <Button variant={'outline'}>
+                                                Sub notes
+                                            </Button>
+                                        </TableCell>
+                                        <TableCell>
+                                            <Button variant={"outline"} className='text-right mr-1'><Pencil /></Button>
+                                            <Button variant={"outline"} className='text-right '><Trash2 /></Button>
+                                        </TableCell>
                                     </>
                                     // <TableCell>
                                     //     Yo
@@ -100,7 +114,7 @@ const page = () => {
                                     // <TableCell>
                                     //     Yo
                                     // </TableCell>
-                                )) : (
+                                ))) : (
                                     <TableCell>Nothing to see here</TableCell>
                                 )}
                             </TableRow>
