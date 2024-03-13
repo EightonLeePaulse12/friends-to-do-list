@@ -20,7 +20,7 @@ import { Button } from './ui/button';
 
 const page = () => {
     const session = useSession()
-    const router = useRouter  ()
+    const router = useRouter()
     const [error, setError] = useState<string | null>(null);
     const [todos, setTodos] = useState<Todo[]>([]);
 
@@ -30,17 +30,17 @@ const page = () => {
                 const todos = await api.todos.fetchSingleToDo.query({
                     id: Number(1)
                 });
-                
+
                 console.log(todos)
                 // setTodos(todos as Todo[])
             } catch (error) {
-                console.error("Error fetching todos:", {error: error});
+                console.error("Error fetching todos:", { error: error });
                 setError("An error occured")
                 return [];
             }
         };
         console.log(todos)
-        fetchToDos() 
+        fetchToDos()
     }, [])
 
 
@@ -50,7 +50,7 @@ const page = () => {
                 <div className="header">
                     <h1 className='text-center p-8 font-bold text-[48px]'>To-do List</h1>
                 </div>
-                <Button onClick={async () => await signOut({ redirect: true }) && void router.push('/api/auth/signin')}>
+                <Button onClick={async () => await signOut({ redirect: true, callbackUrl: "/api/auth/signIn" })}>
                     Log out
                 </Button>
                 <div className="">
@@ -62,42 +62,47 @@ const page = () => {
                                 <TableHead>Name</TableHead>
                                 <TableHead>Due Date</TableHead>
                                 <TableHead>Created At</TableHead>
-                                <TableHead>Sub Notes</TableHead>
                                 <TableHead>Due Date</TableHead>
                                 <TableHead>Priority</TableHead>
-                                <TableHead>Edit</TableHead>
-                                <TableHead>Delete</TableHead>
+                                <TableHead>Sub Notes</TableHead>
+                                <TableHead>Actions</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             <TableRow>
-                                <TableCell>
-                                    Yo
-                                </TableCell>
-                                <TableCell>
-                                    Yo
-                                </TableCell>
-                                <TableCell>
-                                    Yo
-                                </TableCell>
-                                <TableCell>
-                                    Yo
-                                </TableCell>
-                                <TableCell>
-                                    Yo
-                                </TableCell>
-                                <TableCell>
-                                    Yo
-                                </TableCell>
-                                <TableCell>
-                                    Yo
-                                </TableCell>
-                                <TableCell>
-                                    Yo
-                                </TableCell>
-                                <TableCell>
-                                    Yo
-                                </TableCell>
+                                {todos ? todos.map((e) => (
+                                    <>
+                                        <TableCell>
+                                        {e.id}
+                                    </TableCell>
+                                    <TableCell>
+                                        {e.name}
+                                    </TableCell>
+                                    <TableCell>
+                                        {e.dueDate?.toISOString().substring(10, 0)}
+                                    </TableCell>
+                                    <TableCell>
+                                        {e.priority}
+                                    </TableCell>
+                                    <TableCell>
+                                        {e.subnotes[0]?.name}
+                                    </TableCell>
+                                    <TableCell>
+                                        {e.userId}
+                                    </TableCell>
+                                    </>
+                                    // <TableCell>
+                                    //     Yo
+                                    // </TableCell>
+                                    // <TableCell>
+                                    //     Yo
+                                    // </TableCell>
+                                    // <TableCell>
+                                    //     Yo
+                                    // </TableCell>
+                                )) : (
+                                    <TableCell>Nothing to see here</TableCell>
+                                )}
                             </TableRow>
                         </TableBody>
                     </Table>
