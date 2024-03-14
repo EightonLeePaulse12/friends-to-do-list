@@ -11,12 +11,25 @@ import {
     TableHeader,
     TableRow,
 } from "~/components/ui/table"
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "~/components/ui/alert-dialog"
+
 import { useSession, signOut } from 'next-auth/react';
 import { api } from 'utils/api';
 import { useRouter } from 'next/navigation';
 import { Todo } from 'types/todo';
 import { Button } from './ui/button';
 import { Pencil, Trash2 } from 'lucide-react'
+import Link from 'next/link';
 
 
 const page = () => {
@@ -25,15 +38,24 @@ const page = () => {
     const [error, setError] = useState<string | null>(null);
     const [todos, setTodos] = useState<Todo[]>([]);
 
+
+
+    const refetchTodos = async () => {
+        try {
+            const todoss = await api.todos.fetchToDos.query();
+            setTodos(todoss as Todo[]);
+        } catch (e) {
+            console.error("Error: ", e)
+        }
+
+    }
+
     useEffect(() => {
         const fetchToDos = async () => {
             try {
-                const todos = await api.todos.fetchSingleToDo.query({
-                    id: Number(1)
-                });
-
+                const todoss = await api.todos.fetchToDos.query();
                 console.log(todos)
-                setTodos([todos] as Todo[])
+                setTodos(todoss as Todo[])
             } catch (error) {
                 console.error("Error fetching todos:", { error: error });
                 setError("An error occured")
@@ -42,8 +64,26 @@ const page = () => {
         };
         console.log(todos)
         fetchToDos()
-    }, [])
+    }, [refetchTodos])
 
+    const deleteTodo = async (id: number) => {
+        try {
+            await api.todos.deleteToDo.mutate({
+                id: id
+            })
+            await refetchTodos()
+        } catch (e) {
+            console.error("Error: ", e)
+        }
+    }
+
+    const handleDeleteTodo = (id: number) => {
+        return (e: React.MouseEvent<HTMLButtonElement>) => {
+            deleteTodo(id).catch((error) => {
+                console.error("Error: ", error);
+            });
+        }
+    };
 
     return (
         <>
@@ -52,7 +92,7 @@ const page = () => {
                     <h1 className='text-center p-8 font-bold text-[48px]'>To-do List</h1>
                 </div>
                 <div className="w-[100%] flex justify-between">
-                    <Button onClick={async () => await signOut({ redirect: true, callbackUrl: "/api/auth/signin" })}>
+                    <Button onClick={async () => await signOut({ redirect: true, callbackUrl: "/login" })}>
                         Log out
                     </Button>
                     <Button variant={"outline"}>
@@ -101,8 +141,25 @@ const page = () => {
                                             </Button>
                                         </TableCell>
                                         <TableCell>
-                                            <Button variant={"outline"} className='text-right mr-1'><Pencil /></Button>
-                                            <Button variant={"outline"} className='text-right '><Trash2 /></Button>
+                                            <Link href={`/edit/${e.id}`}><Button variant={"outline"} className='text-right mr-1'><Pencil /></Button></Link>
+                                            <AlertDialog>
+                                                <AlertDialogTrigger className='text-right '><Button variant={'outline'}><Trash2 /></Button></AlertDialogTrigger>
+                                                <AlertDialogContent>
+                                                    <AlertDialogHeader>
+                                                        <AlertDialogTitle>
+                                                            Are you sure you want to delete this item?
+                                                        </AlertDialogTitle>
+                                                        <AlertDialogDescription>
+                                                            This action can not be undone. Clicking "confirm" will delete this item.
+                                                        </AlertDialogDescription>
+                                                    </AlertDialogHeader>
+
+                                                    <AlertDialogFooter>
+                                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                        <AlertDialogAction onClick={handleDeleteTodo(e.id)}>Confirm</AlertDialogAction>
+                                                    </AlertDialogFooter>
+                                                </AlertDialogContent>
+                                            </AlertDialog>
                                         </TableCell>
                                     </>
                                     // <TableCell>

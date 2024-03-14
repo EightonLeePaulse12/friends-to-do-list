@@ -3,6 +3,8 @@
 import { signIn } from "next-auth/react";
 // import { useFormStatus } from "react-dom";
 import { Button } from "./ui/button";
+import Link from "next/link";
+// import { Link } from "lucide-react";
 
 export default function LoginForm() {
   return (
@@ -16,6 +18,8 @@ export default function LoginForm() {
 
 function LoginButton() {
   return (
+    <>
+    <Link href="/register">Register</Link>
     <Button
       className="mt-4 w-full p-12 text-[20px] font-extrabold active:bg-black active:text-white"
       variant={"outline"}
@@ -23,5 +27,6 @@ function LoginButton() {
     >
       Log in with Google
     </Button>
+    </>
   );
 }

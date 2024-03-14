@@ -7,8 +7,10 @@ import {
 } from "~/server/api/trpc";
 
 export const todoRouter = createTRPCRouter({
+
   fetchToDos: protectedProcedure.query(async ({ ctx }) => {
     const userID = ctx.session.user.id;
+    console.log(userID)
     if (!userID) return;
     const todos = await ctx.db.todos.findMany({
       where: {
@@ -18,6 +20,7 @@ export const todoRouter = createTRPCRouter({
         subnotes: true,
       },
     });
+    console.log("TODOS: ", todos)
     return todos;
   }),
 
