@@ -50,8 +50,8 @@ export const todoRouter = createTRPCRouter({
   makeToDo: protectedProcedure
     .input(
       z.object({
-        id: z.number(),
-        userId: z.string(),
+        // id: z.number(),
+        userId: z.string().optional(),
         name: z.string(),
         priority: z.enum(["Null", "Low", "Neutral", "High", "Critical"]),
         dueDate: z.date().nullish(),

@@ -1,6 +1,6 @@
 export type Todo = {
     id: number;
-    userId: string;
+    userId: string | undefined;
     name: string;
     priority: "Null" | "Low" | "Neutral" | "High" | "Critical";
     dueDate: Date | null;
