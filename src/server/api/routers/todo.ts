@@ -20,7 +20,6 @@ export const todoRouter = createTRPCRouter({
         subnotes: true,
       },
     });
-    console.log("TODOS: ", todos)
     return todos;
   }),
 
@@ -43,7 +42,6 @@ export const todoRouter = createTRPCRouter({
           },
         },
       });
-      console.log("Todo: ", todo)
       return todo
     }),
 
@@ -99,9 +97,9 @@ export const todoRouter = createTRPCRouter({
     .input(
       z.object({
         id: z.number(),
-        name: z.string(),
-        priority: z.enum(["Null", "Low", "Neutral", "High", "Critical"]),
-        dueDate: z.date().nullish(),
+        name: z.string().optional(),
+        priority: z.enum(["Null", "Low", "Neutral", "High", "Critical"]).optional(),
+        dueDate: z.date().nullish().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {

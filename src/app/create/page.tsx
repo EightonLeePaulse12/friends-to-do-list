@@ -81,9 +81,9 @@ const page = () => {
         <h1 className="text-center text-2xl font-bold">Add a Todo</h1>
         <div className="form">
           <Label>Name</Label>
-          <Input onChange={(e) => setName(e.target.value)} />
+          <Input onChange={(e) => setName(e.target.value)} className="!pb-2"/>
 
-          <div className="flex flex-col pb-5 pr-5 pt-2">
+          <div className="flex flex-col pb-1 pr-5 pt-2">
             <Label>Priority</Label>
             <Select
               name="type"
