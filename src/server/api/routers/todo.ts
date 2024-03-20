@@ -7,10 +7,9 @@ import {
 } from "~/server/api/trpc";
 
 export const todoRouter = createTRPCRouter({
-
   fetchToDos: protectedProcedure.query(async ({ ctx }) => {
     const userID = ctx.session.user.id;
-    console.log(userID)
+    console.log(userID);
     if (!userID) return;
     const todos = await ctx.db.todos.findMany({
       where: {
@@ -42,14 +41,13 @@ export const todoRouter = createTRPCRouter({
           },
         },
       });
-      return todo
+      return todo;
     }),
 
   makeToDo: protectedProcedure
     .input(
       z.object({
-        // id: z.number(),
-        userId: z.string().optional(),
+        userId: z.string(),
         name: z.string(),
         priority: z.enum(["Null", "Low", "Neutral", "High", "Critical"]),
         dueDate: z.date().nullish(),
@@ -98,7 +96,9 @@ export const todoRouter = createTRPCRouter({
       z.object({
         id: z.number(),
         name: z.string().optional(),
-        priority: z.enum(["Null", "Low", "Neutral", "High", "Critical"]).optional(),
+        priority: z
+          .enum(["Null", "Low", "Neutral", "High", "Critical"])
+          .optional(),
         dueDate: z.date().nullish().optional(),
       }),
     )
